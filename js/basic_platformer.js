@@ -52,7 +52,7 @@ function animate()
 	{
 		player.vx += player.ax * player.force;
 	}
-
+//ye
 	player.vx *= fX;
 	player.vy *= fY;
 	
