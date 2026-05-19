@@ -20,8 +20,8 @@ var player;
 
 	platform1 = new GameObject();
 		platform1.width = 80;
-		platform1.height = 120;
-		platform1.x = 350;
+		platform1.height = 20;
+		platform1.x = 200;
 		platform1.y = platform0.y - platform0.height/2 - platform1.height/2;
 		platform1.color = "orange";
 		
@@ -90,6 +90,28 @@ function animate()
 		player.vx = 0;
 	}
 	while(platform0.hitTestPoint(player.top()) && player.vy <=0)
+	{
+		player.y++;
+		player.vy = 0;
+	}
+
+		while(platform1.hitTestPoint(player.bottom()) && player.vy >=0)
+	{
+		player.y--;
+		player.vy = 0;
+		player.canJump = true;
+	}
+	while(platform1.hitTestPoint(player.left()) && player.vx <=0)
+	{
+		player.x++;
+		player.vx = 0;
+	}
+	while(platform1.hitTestPoint(player.right()) && player.vx >=0)
+	{
+		player.x--;
+		player.vx = 0;
+	}
+	while(platform1.hitTestPoint(player.top()) && player.vy <=0)
 	{
 		player.y++;
 		player.vy = 0;
