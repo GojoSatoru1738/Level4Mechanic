@@ -17,6 +17,13 @@ var player;
 		platform0.x = platform0.width/2;
 		platform0.y = canvas.height - platform0.height/2;
 		platform0.color = "#66ff33";
+
+	platform1 = new GameObject();
+		platform1.width = 80;
+		platform1.height = 120;
+		platform1.x = 350;
+		platform1.y = platform0.y - platform0.height/2 - platform1.height/2;
+		platform1.color = "orange";
 		
 	goal = new GameObject({width:24, height:50, x:canvas.width-50, y:100, color:"#00ffff"});
 	
@@ -31,10 +38,7 @@ var player;
 
 function animate()
 {
-	if(w)
-	{
-    	player.vy -= 2;
-	}
+	
 	
 	context.clearRect(0,0,canvas.width, canvas.height);	
 
@@ -61,17 +65,13 @@ function animate()
 	player.x += Math.round(player.vx);
 	player.y += Math.round(player.vy);
 
-	// VAULT ASSASSIN CREEED OMGGGGG
-	if(player.hitTestObject(platform0))
+	//Vault 
+	if (w && player.canJump && platform0.hitTestPoint(player.right()))
 	{
-    
-    	if(w && player.vy < 5)
-    	{
-        	player.vy = -18;   // up
-        	player.vx += 8;    // forward
-    	}
+    	player.vy = -18;
+    	player.vx = 8;
+    	player.canJump = false;
 	}
-	
 
 	while(platform0.hitTestPoint(player.bottom()) && player.vy >=0)
 	{
@@ -114,6 +114,8 @@ function animate()
 	
 	
 	platform0.drawRect();
+	platform1.drawRect();
+
 
 	//Show hit points
 	player.drawRect();
