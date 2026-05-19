@@ -19,8 +19,8 @@ var player;
 		platform0.color = "#66ff33";
 
 	platform1 = new GameObject();
-		platform1.width = 80;
-		platform1.height = 20;
+		platform1.width = 200;
+		platform1.height = 40;
 		platform1.x = 200;
 		platform1.y = platform0.y - platform0.height/2 - platform1.height/2;
 		platform1.color = "orange";
@@ -28,8 +28,12 @@ var player;
 	goal = new GameObject({width:24, height:50, x:canvas.width-50, y:100, color:"#00ffff"});
 	
 
-	var fX = .85;
+	var fX = .85; 
 	var fY = .97;
+
+	var rotation = 0;
+	var rotationSpeed = 100;
+	var vaulting = true;
 	
 	var gravity = 1;
 
@@ -46,7 +50,11 @@ function animate()
 	{
 		player.canJump = false;
 		player.vy += player.jumpHeight;
+		rotationSpeed = 20;
 	}
+
+	rotation += rotationSpeed;
+	rotationSpeed *= 0.9;
 
 	if(a)
 	{
@@ -79,16 +87,22 @@ function animate()
 		player.vy = 0;
 		player.canJump = true;
 	}
-	while(platform0.hitTestPoint(player.left()) && player.vx <=0)
+	while(platform0.hitTestPoint(player.left()) && player.vx <= 0)
 	{
-		player.x++;
-		player.vx = 0;
+    	player.x++;
+
+    	
+ 		player.vx *= -1;
 	}
-	while(platform0.hitTestPoint(player.right()) && player.vx >=0)
+
+	while(platform0.hitTestPoint(player.right()) && player.vx >= 0)
 	{
-		player.x--;
-		player.vx = 0;
+    	player.x--;
+
+    	
+    	player.vx *= -1;
 	}
+	
 	while(platform0.hitTestPoint(player.top()) && player.vy <=0)
 	{
 		player.y++;
@@ -101,16 +115,7 @@ function animate()
 		player.vy = 0;
 		player.canJump = true;
 	}
-	while(platform1.hitTestPoint(player.left()) && player.vx <=0)
-	{
-		player.x++;
-		player.vx = 0;
-	}
-	while(platform1.hitTestPoint(player.right()) && player.vx >=0)
-	{
-		player.x--;
-		player.vx = 0;
-	}
+	
 	while(platform1.hitTestPoint(player.top()) && player.vy <=0)
 	{
 		player.y++;
@@ -140,7 +145,19 @@ function animate()
 
 
 	//Show hit points
-	player.drawRect();
+	context.save();
+	context.translate(player.x, player.y);
+	context.rotate(rotation * Math.PI / 180);
+
+	context.fillStyle = player.color;
+	context.fillRect(
+    	-player.width/2,
+    	-player.height/2,
+    	player.width,
+    	player.height
+		);
+
+	context.restore();
 	goal.drawCircle();
 }
 
