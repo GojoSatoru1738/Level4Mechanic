@@ -156,6 +156,7 @@ function animate()
     	player.width,
     	player.height
 		);
+		
 
 	context.restore();
 	goal.drawCircle();
