@@ -24,6 +24,14 @@ var player;
 		platform1.x = 200;
 		platform1.y = platform0.y - platform0.height/2 - platform1.height/2;
 		platform1.color = "orange";
+
+	var platform2 = new GameObject();
+		platform2.width = 120;
+		platform2.height = 30;
+		platform2.x = 500;
+		platform2.y = 400;
+		platform2.color = "blue";
+		platform2.vx = 4;
 		
 	goal = new GameObject({width:24, height:50, x:canvas.width-50, y:100, color:"#00ffff"});
 	
@@ -45,6 +53,20 @@ function animate()
 	
 	
 	context.clearRect(0,0,canvas.width, canvas.height);	
+
+	// Moving platform 
+	platform2.x += platform2.vx;
+
+
+	if(platform2.x >= 850)
+	{
+    platform2.vx = -4;
+	}
+
+	if(platform2.x <= 150)
+	{
+    platform2.vx = 4;
+	}
 
 	if(w && player.canJump && player.vy ==0)
 	{
@@ -121,6 +143,22 @@ function animate()
 		player.y++;
 		player.vy = 0;
 	}
+
+	while(platform2.hitTestPoint(player.bottom()) && player.vy >=0)
+	{
+    	player.y--;
+    	player.vy = 0;
+    	player.canJump = true;
+
+    
+    	player.x += platform2.vx;
+	}
+
+	while(platform2.hitTestPoint(player.top()) && player.vy <=0)
+	{
+    	player.y++;
+    	player.vy = 0;
+	}
 	
 	
 	//---------Objective: Treasure!!!!!!!---------------------------------------------------------------------------------------------------- 
@@ -142,6 +180,7 @@ function animate()
 	
 	platform0.drawRect();
 	platform1.drawRect();
+	platform2.drawRect();
 
 
 	//Show hit points
