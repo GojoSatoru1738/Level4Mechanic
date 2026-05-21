@@ -29,7 +29,7 @@ var player;
 		platform2.width = 120;
 		platform2.height = 30;
 		platform2.x = 500;
-		platform2.y = 400;
+		platform2.y = 600;
 		platform2.color = "blue";
 		platform2.vx = 4;
 		
