@@ -32,7 +32,15 @@ var player;
 		platform2.y = 600;
 		platform2.color = "blue";
 		platform2.vx = 4;
-		
+	
+	bouncePad = new GameObject();
+
+	bouncePad.width = 100;
+	bouncePad.height = 20;
+	bouncePad.x = 750;
+	bouncePad.y = 500;
+	bouncePad.color = "purple";
+
 	goal = new GameObject({width:24, height:50, x:canvas.width-50, y:100, color:"#00ffff"});
 	
 
@@ -159,6 +167,11 @@ function animate()
     	player.y++;
     	player.vy = 0;
 	}
+
+	while(bouncePad.hitTestPoint(player.bottom()) && player.vy >=0)
+	{
+    	player.vy = -40;
+	}	
 	
 	
 	//---------Objective: Treasure!!!!!!!---------------------------------------------------------------------------------------------------- 
@@ -181,6 +194,7 @@ function animate()
 	platform0.drawRect();
 	platform1.drawRect();
 	platform2.drawRect();
+	bouncePad.drawRect();
 
 
 	//Show hit points
