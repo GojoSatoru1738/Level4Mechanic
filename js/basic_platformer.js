@@ -41,6 +41,16 @@ var player;
 	bouncePad.y = 500;
 	bouncePad.color = "purple";
 
+	portal = new GameObject();
+
+		portal.width = 25;
+		portal.height = 25;
+
+		portal.x = 400;
+		portal.y = 600;
+
+		portal.color = "black";
+
 	goal = new GameObject({width:24, height:50, x:canvas.width-50, y:100, color:"#00ffff"});
 	
 
@@ -189,12 +199,19 @@ function animate()
 		context.fillText("You Win!!!", canvas.width/2, canvas.height/2);
 		
 	}
+
+	if(portal.hitTestObject(player))
+	{
+    	player.x = 100;
+    	player.y = 100;
+	}
 	
 	
 	platform0.drawRect();
 	platform1.drawRect();
 	platform2.drawRect();
 	bouncePad.drawRect();
+	portal.drawRect();
 
 
 	//Show hit points
